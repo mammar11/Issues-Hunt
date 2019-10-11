@@ -42,7 +42,7 @@ class App extends Component {
       readOnly: "",
       language: "",
       label: "",
-      lebelText: "",
+      labelText: "",
       sortOption: "",
       sortOptionText: "",
       pageLink: "",
@@ -147,7 +147,7 @@ class App extends Component {
       this.setState(
         {
           label: event.target.dataset.id,
-          lebelText: event.target.dataset.text,
+          labelText: event.target.dataset.text,
           selectedPage: 1
         },
         () => this.searchNormal()
@@ -184,20 +184,29 @@ class App extends Component {
     }
   }
 
-  clearQuery() {
-    this.setState(
-      {
-        issues: "",
-        issuesCount: "0",
-        input: "",
-        language: "",
-        label: "",
-        lebelText: "",
-        sortOption: "",
-        sortOptionText: ""
-      },
-      () => this.ResultsListRender()
-    );
+  clearQuery(e, attribute) {
+    if (attribute) {
+      this.showSpinner();
+      this.setState(
+        { [attribute]: '', [attribute + 'Text']: '' },
+        () => this.callAPI()
+      );
+    }
+    else {
+      this.setState(
+        {
+          issues: "",
+          issuesCount: "0",
+          input: "",
+          language: "",
+          label: "",
+          labelText: "",
+          sortOption: "",
+          sortOptionText: ""
+        },
+        () => this.ResultsListRender()
+      );
+    }
   }
 
   //event.preventDefault not working in callback
@@ -270,7 +279,7 @@ class App extends Component {
       this.state.issues !== ""
     ) {
       return (
-        <ClearQuery text='Clear search query and filters' onClearQuery={event => this.clearQuery(event)} />
+        <ClearQuery text='Clear search query and filters' onClearQuery={(e) => this.clearQuery(e)} />
       );
     }
     return null;
@@ -342,7 +351,7 @@ class App extends Component {
   }
 
   render() {
-    const {language, label, lebelText, sortOption, sortOptionText} = this.state;
+    const { language, label, labelText, sortOption, sortOptionText } = this.state;
     return (
       <div className="App">
         <Header />
@@ -354,11 +363,12 @@ class App extends Component {
             searchIssues={event => this.search(event)}
             input={this.state.input}
           />
-          {this.QueryRender()}
-          { language && <ClearQuery text={language} onClearQuery={event => this.clearQuery(event)} />}
-          { lebelText && <ClearQuery text={lebelText} onClearQuery={event => this.clearQuery(event)} />}
-          { sortOptionText && <ClearQuery text={sortOptionText} onClearQuery={event => this.clearQuery(event)} />}
-
+          <div>
+            {this.QueryRender()}
+            {language && <ClearQuery text={language} onClearQuery={event => this.clearQuery(event, 'language')} />}
+            {labelText && <ClearQuery text={labelText} onClearQuery={event => this.clearQuery(event, 'label')} />}
+            {sortOptionText && <ClearQuery text={sortOptionText} onClearQuery={event => this.clearQuery(event, 'sortOption')} />}
+          </div>
           <ResultsHeader
             searchBySort={event => this.searchBySort(event)}
             currentSortOption={sortOption}
