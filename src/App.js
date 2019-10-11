@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
 import "./App.css";
 //Import Components
@@ -272,17 +272,16 @@ class App extends Component {
   }
 
   QueryRender() {
-    if (
-      this.state.input !== "" ||
-      this.state.language !== "" ||
-      this.state.label !== "" ||
-      this.state.issues !== ""
-    ) {
+    const { language, labelText, input, sortOptionText, issues } = this.state;
+    const filterExists = (language || labelText || sortOptionText);
       return (
-        <ClearQuery text='Clear search query and filters' onClearQuery={(e) => this.clearQuery(e)} />
+        <Fragment>
+          {(filterExists || issues || input) && <ClearQuery text='Clear search query and filters' onClearQuery={(e) => this.clearQuery(e)} />}
+          {language && <ClearQuery text={language} onClearQuery={event => this.clearQuery(event, 'language')} />}
+          {labelText && <ClearQuery text={labelText} onClearQuery={event => this.clearQuery(event, 'label')} />}
+          {sortOptionText && <ClearQuery text={sortOptionText} onClearQuery={event => this.clearQuery(event, 'sortOption')} />}
+        </Fragment>
       );
-    }
-    return null;
   }
 
   //Widget previous and next buttons
@@ -351,7 +350,7 @@ class App extends Component {
   }
 
   render() {
-    const { language, label, labelText, sortOption, sortOptionText } = this.state;
+    const { language, label, sortOption } = this.state;
     return (
       <div className="App">
         <Header />
@@ -365,9 +364,6 @@ class App extends Component {
           />
           <div>
             {this.QueryRender()}
-            {language && <ClearQuery text={language} onClearQuery={event => this.clearQuery(event, 'language')} />}
-            {labelText && <ClearQuery text={labelText} onClearQuery={event => this.clearQuery(event, 'label')} />}
-            {sortOptionText && <ClearQuery text={sortOptionText} onClearQuery={event => this.clearQuery(event, 'sortOption')} />}
           </div>
           <ResultsHeader
             searchBySort={event => this.searchBySort(event)}
