@@ -15,8 +15,6 @@ const displayDate = text => {
 // slice to only display repo name
 const displayRepo = repository_url => {
   let slicedName = repository_url.split("/");
-  console.log(slicedName);
-  console.log(slicedName[4]);
   //return project name
   return slicedName[4];
 };
@@ -27,7 +25,6 @@ const repoLink = (repository_url, username) => {
 };
 
 const ResultsList = props => {
-  console.log(props);
   const { issuesReturn } = props;
   const results = issuesReturn.items.map(item => (
     <Card key={item.id}>

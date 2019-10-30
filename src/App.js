@@ -92,7 +92,6 @@ class App extends Component {
         `https://api.github.com/search/issues?q=${value}+state:open${labelParameter}${languageParameter}${clientAPIKeys}${sortOption}&per_page=25`
       )
       .then(res => {
-        console.log(res);
         // console.log(res.headers);
         let headers;
         let pageLink;
@@ -187,12 +186,10 @@ class App extends Component {
   clearQuery(e, attribute) {
     if (attribute) {
       this.showSpinner();
-      this.setState(
-        { [attribute]: '', [attribute + 'Text']: '' },
-        () => this.callAPI()
+      this.setState({ [attribute]: "", [attribute + "Text"]: "" }, () =>
+        this.callAPI()
       );
-    }
-    else {
+    } else {
       this.setState(
         {
           issues: "",
@@ -273,15 +270,35 @@ class App extends Component {
 
   QueryRender() {
     const { language, labelText, input, sortOptionText, issues } = this.state;
-    const filterExists = (language || labelText || sortOptionText);
-      return (
-        <Fragment>
-          {(filterExists || issues || input) && <ClearQuery text='Clear search query and filters' onClearQuery={(e) => this.clearQuery(e)} />}
-          {language && <ClearQuery text={language} onClearQuery={event => this.clearQuery(event, 'language')} />}
-          {labelText && <ClearQuery text={labelText} onClearQuery={event => this.clearQuery(event, 'label')} />}
-          {sortOptionText && <ClearQuery text={sortOptionText} onClearQuery={event => this.clearQuery(event, 'sortOption')} />}
-        </Fragment>
-      );
+    const filterExists = language || labelText || sortOptionText;
+    return (
+      <Fragment>
+        {(filterExists || issues || input) && (
+          <ClearQuery
+            text="Clear search query and filters"
+            onClearQuery={e => this.clearQuery(e)}
+          />
+        )}
+        {language && (
+          <ClearQuery
+            text={language}
+            onClearQuery={event => this.clearQuery(event, "language")}
+          />
+        )}
+        {labelText && (
+          <ClearQuery
+            text={labelText}
+            onClearQuery={event => this.clearQuery(event, "label")}
+          />
+        )}
+        {sortOptionText && (
+          <ClearQuery
+            text={sortOptionText}
+            onClearQuery={event => this.clearQuery(event, "sortOption")}
+          />
+        )}
+      </Fragment>
+    );
   }
 
   //Widget previous and next buttons
@@ -362,9 +379,7 @@ class App extends Component {
             searchIssues={event => this.search(event)}
             input={this.state.input}
           />
-          <div>
-            {this.QueryRender()}
-          </div>
+          <div>{this.QueryRender()}</div>
           <ResultsHeader
             searchBySort={event => this.searchBySort(event)}
             currentSortOption={sortOption}
