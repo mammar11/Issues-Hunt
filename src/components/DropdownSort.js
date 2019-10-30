@@ -1,27 +1,24 @@
-import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import CheckMarkSort from './CheckMarkSort';
-import './css/DropDown.css';
+import React from "react";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import CheckMarkSort from "./CheckMarkSort";
+import "./css/DropDown.css";
 //create sort checkmark
 
-const DropdownSort = (props) => {
+const DropdownSort = props => {
   const sortOptions = [
-    ['', 'Best Match (default)'],
-    ['&sort=created&order=desc','Newest'],
-    ['&sort=created&order=asc', 'Oldest'],
-    ['&sort=comments&order=desc', 'Most Comments'],
-    ['&sort=comments&order=asc', 'Least Comments'],
-    ['&sort=Updated&order=desc', 'Recently Updated']
+    ["", "Best Match (default)"],
+    ["&sort=created&order=desc", "Newest"],
+    ["&sort=created&order=asc", "Oldest"],
+    ["&sort=comments&order=desc", "Most Comments"],
+    ["&sort=comments&order=asc", "Least Comments"],
+    ["&sort=Updated&order=desc", "Recently Updated"]
   ];
 
-  const {
-    searchBySort,
-    currentSortOption,
-  } = props;
+  const { searchBySort, currentSortOption } = props;
 
-//conditional rendering for checkmark in dropdown list
-  const DropdownItems = sortOptions.map(option =>
+  //conditional rendering for checkmark in dropdown list
+  const DropdownItems = sortOptions.map(option => (
     <Dropdown.Item
       key={option}
       data-id={option[0]}
@@ -45,17 +42,13 @@ const DropdownSort = (props) => {
         </div>
       </div>
     </Dropdown.Item>
-  );
+  ));
 
-  return(
-    <DropdownButton
-      id="Dropdownsort"
-      title="Sort"
-      className="DropdownButton"
-    >
+  return (
+    <DropdownButton id="Dropdownsort" title="Sort" className="DropdownButton">
       {DropdownItems}
     </DropdownButton>
   );
-}
+};
 
 export default DropdownSort;

@@ -1,14 +1,9 @@
-import React from 'react';
+import React from "react";
 
-const CheckMarkSort = (props) => {
-  const {
-    searchedSort,
-    currentSortOption,
-    passID,
-  } = props;
-
+const CheckMarkSort = props => {
+  const { searchedSort, currentSortOption, passID } = props;
   //return check mark only if state matches current chosen language
-  if(searchedSort === currentSortOption) {
+  if (searchedSort === currentSortOption) {
     return (
       <div data-id={passID}>
         <i className="fas fa-check" />
@@ -16,13 +11,7 @@ const CheckMarkSort = (props) => {
     );
   }
   //return empty div as default
-  return (
-    <div
-      data-id={passID}
-      className="icon-box"
-    >
-    </div>
-  );
-}
+  return <div data-id={passID} className="icon-box"></div>;
+};
 
 export default CheckMarkSort;

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
+import APIbase from "./API/APIbase";
 import "./App.css";
 //Import Components
 import Header from "./components/Header";
@@ -13,9 +14,9 @@ import NoResults from "./components/NoResults";
 import PaginationWidget from "./components/PaginationWidget";
 import Footer from "./components/Footer";
 import Spinner from "./components/Spinner";
-// import Keys from "./config/keys";
-const Keys = {};
-const guestAPIMode = true; /* Api calls are limited to 60 per hour in guestAPIMode */
+import Keys from "./config/keys";
+// const Keys = {};
+const guestAPIMode = false; /* Api calls are limited to 60 per hour in guestAPIMode */
 
 /* When making guestAPIMode = false, also comment out const Keys = {} and uncomment the import Keys line above.
    Setup your keys by making a config folder in src ./config/keys.js paste in the following:
@@ -87,10 +88,16 @@ class App extends Component {
     const clientAPIKeys = guestAPIMode
       ? ""
       : `&client_id=${Keys.clientID}&client_secret=${Keys.clientSecret}`;
-    axios
-      .get(
-        `https://api.github.com/search/issues?q=${value}+state:open${labelParameter}${languageParameter}${clientAPIKeys}${sortOption}&per_page=25`
-      )
+
+    const params = {
+      params: {
+        per_page: 25
+      }
+    };
+    APIbase.get(
+      `issues?q=${value}+state:open${labelParameter}${languageParameter}${clientAPIKeys}${sortOption}`,
+      params
+    )
       .then(res => {
         // console.log(res.headers);
         let headers;
