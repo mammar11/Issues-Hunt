@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
 import "./App.css";
 //Import Components
@@ -42,7 +42,9 @@ class App extends Component {
       readOnly: "",
       language: "",
       label: "",
+      labelText: "",
       sortOption: "",
+      sortOptionText: "",
       pageLink: "",
       firstPage: 1,
       lastPage: 15,
@@ -65,7 +67,7 @@ class App extends Component {
     if (this.state.label === "") {
       labelParameter = "";
     } else {
-      labelParameter = `+label:${this.state.label}`;
+      labelParameter = `+label:"${this.state.label}"`;
     }
     //set language parameter
     let languageParameter;
@@ -144,7 +146,8 @@ class App extends Component {
     } else {
       this.setState(
         {
-          label: `"${event.target.dataset.id}"`,
+          label: event.target.dataset.id,
+          labelText: event.target.dataset.text,
           selectedPage: 1
         },
         () => this.searchNormal()
@@ -173,6 +176,7 @@ class App extends Component {
       this.setState(
         {
           sortOption: event.target.dataset.id,
+          sortOptionText: event.target.dataset.text,
           selectedPage: 1
         },
         () => this.searchNormal()
@@ -180,18 +184,29 @@ class App extends Component {
     }
   }
 
-  clearSearchbar() {
-    this.setState(
-      {
-        issues: "",
-        issuesCount: "0",
-        input: "",
-        language: "",
-        label: "",
-        sortOption: ""
-      },
-      () => this.ResultsListRender()
-    );
+  clearQuery(e, attribute) {
+    if (attribute) {
+      this.showSpinner();
+      this.setState(
+        { [attribute]: '', [attribute + 'Text']: '' },
+        () => this.callAPI()
+      );
+    }
+    else {
+      this.setState(
+        {
+          issues: "",
+          issuesCount: "0",
+          input: "",
+          language: "",
+          label: "",
+          labelText: "",
+          sortOption: "",
+          sortOptionText: ""
+        },
+        () => this.ResultsListRender()
+      );
+    }
   }
 
   //event.preventDefault not working in callback
@@ -257,17 +272,16 @@ class App extends Component {
   }
 
   QueryRender() {
-    if (
-      this.state.input !== "" ||
-      this.state.language !== "" ||
-      this.state.label !== "" ||
-      this.state.issues !== ""
-    ) {
+    const { language, labelText, input, sortOptionText, issues } = this.state;
+    const filterExists = (language || labelText || sortOptionText);
       return (
-        <ClearQuery clearSearchbar={event => this.clearSearchbar(event)} />
+        <Fragment>
+          {(filterExists || issues || input) && <ClearQuery text='Clear search query and filters' onClearQuery={(e) => this.clearQuery(e)} />}
+          {language && <ClearQuery text={language} onClearQuery={event => this.clearQuery(event, 'language')} />}
+          {labelText && <ClearQuery text={labelText} onClearQuery={event => this.clearQuery(event, 'label')} />}
+          {sortOptionText && <ClearQuery text={sortOptionText} onClearQuery={event => this.clearQuery(event, 'sortOption')} />}
+        </Fragment>
       );
-    }
-    return null;
   }
 
   //Widget previous and next buttons
@@ -336,6 +350,7 @@ class App extends Component {
   }
 
   render() {
+    const { language, label, sortOption } = this.state;
     return (
       <div className="App">
         <Header />
@@ -347,12 +362,14 @@ class App extends Component {
             searchIssues={event => this.search(event)}
             input={this.state.input}
           />
-          {this.QueryRender()}
+          <div>
+            {this.QueryRender()}
+          </div>
           <ResultsHeader
             searchBySort={event => this.searchBySort(event)}
-            currentSortOption={this.state.sortOption}
-            searchedLabel={this.state.label}
-            searchedLanguaged={this.state.language}
+            currentSortOption={sortOption}
+            searchedLabel={label}
+            searchedLanguaged={language}
             totalCount={this.state.issuesCount}
             searchByLabel={event => this.searchByLabel(event)}
             searchByLanguage={event => this.searchByLanguage(event)}

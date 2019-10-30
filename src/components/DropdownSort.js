@@ -25,6 +25,7 @@ const DropdownSort = (props) => {
     <Dropdown.Item
       key={option}
       data-id={option[0]}
+      data-text={option[1]}
       onClick={searchBySort}
     >
       <div className="checkmark-list-wrapper">
@@ -37,6 +38,7 @@ const DropdownSort = (props) => {
         </div>
         <div
           data-id={option[0]}
+          data-text={option[1]}
           className="dropdown-text-wrapper"
         >
           {option[1]}
