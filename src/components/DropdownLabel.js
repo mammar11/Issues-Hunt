@@ -25,6 +25,7 @@ const DropdownLabel = (props) => {
       key={label[0]}
       as="button"
       data-id={label[0]}
+      data-text={label[1]}
       onClick={searchByLabel}
     >
       <div className="checkmark-list-wrapper">
@@ -37,6 +38,7 @@ const DropdownLabel = (props) => {
         </div>
         <div
           data-id={label[0]}
+          data-text={label[1]}
           className="dropdown-text-wrapper">
           {label[1]}
         </div>
