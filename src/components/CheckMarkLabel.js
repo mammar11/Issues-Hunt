@@ -1,15 +1,9 @@
-import React from 'react';
+import React from "react";
 
-const CheckMarkLabel = (props) => {
-  const {
-    passID,
-    currentLabel,
-    searchedLabel
-  } = props;
-
-  //add quotes to match props incoming from search query
+const CheckMarkLabel = props => {
+  const { passID, currentLabel, searchedLabel } = props;
   //return check mark only if state matches current chosen label
-  if(`"${currentLabel}"` === searchedLabel) {
+  if (currentLabel === searchedLabel) {
     return (
       <div data-id={passID}>
         <i className="fas fa-check" />
@@ -17,13 +11,7 @@ const CheckMarkLabel = (props) => {
     );
   }
   //return empty div as default
-  return (
-    <div
-      data-id={passID}
-      className="icon-box"
-    >
-    </div>
-  );
-}
+  return <div data-id={passID} className="icon-box"></div>;
+};
 
 export default CheckMarkLabel;
