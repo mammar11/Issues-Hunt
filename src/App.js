@@ -90,7 +90,7 @@ class App extends Component {
         `https://api.github.com/search/issues?q=${value}+state:open${labelParameter}${languageParameter}${clientAPIKeys}${sortOption}&per_page=25`
       )
       .then(res => {
-        // console.log(res.data);
+        console.log(res);
         // console.log(res.headers);
         let headers;
         let pageLink;

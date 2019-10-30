@@ -1,23 +1,15 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import InputGroup from 'react-bootstrap/InputGroup';
-import './css/SearchBar.css';
+import React from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import InputGroup from "react-bootstrap/InputGroup";
+import "./css/SearchBar.css";
 
-const SearchBar = (props) => {
-  const {
-    searchIssues,
-    input,
-    searchInput,
-    readOnly
-  } = props;
+const SearchBar = props => {
+  const { searchIssues, input, searchInput, readOnly } = props;
 
   return (
-    <Form
-      className="SearchBar"
-      onSubmit={searchIssues}
-    >
+    <Form className="SearchBar" onSubmit={searchIssues}>
       <InputGroup>
         <FormControl
           value={input}
@@ -28,16 +20,13 @@ const SearchBar = (props) => {
           aria-describedby="basic-addon2"
         />
         <InputGroup.Append>
-          <Button
-            className="search-button"
-            onClick={searchIssues}
-          >
+          <Button className="search-button" onClick={searchIssues}>
             Search
           </Button>
         </InputGroup.Append>
       </InputGroup>
     </Form>
   );
-}
+};
 
 export default SearchBar;
