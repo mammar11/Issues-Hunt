@@ -85,9 +85,7 @@ class App extends Component {
       //parameters already set in DropdownSort.js
       sortOption = this.state.sortOption;
     }
-    const clientAPIKeys = guestAPIMode
-      ? ""
-      : `&client_id=${Keys.clientID}&client_secret=${Keys.clientSecret}`;
+    const clientAPIKeys = guestAPIMode ? "" : `&client_id=${Keys.clientID}&client_secret=${Keys.clientSecret}`;
 
     const params = {
       params: {
@@ -99,7 +97,6 @@ class App extends Component {
       params
     )
       .then(res => {
-        // console.log(res.headers);
         let headers;
         let pageLink;
         //set as 0 as default
@@ -110,7 +107,7 @@ class App extends Component {
           res.data.total_count.toLocaleString() !== "0" &&
           res.headers.link !== undefined
         ) {
-          // console.log(res.headers.link);
+
           headers = res.headers.link.split(";");
           //logic to get pageLink
           pageLink = headers[0].slice(1, headers[0].length - 2);
