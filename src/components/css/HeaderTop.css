@@ -1,8 +1,8 @@
 .header-block {
   height: 6rem;
   text-align: center;
-  color: white;
-  background: #343a40;
+  color: rgb(229, 223, 255);
+  background: #2b2626;
   margin-bottom: 1.8rem;
   position: relative;
 }
@@ -14,11 +14,11 @@
 .website-link {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #0062cc;
+  color: #0036cc;
 }
 
 .website-link:hover {
-  color: #0062cc;
+  color: #001aad;
   text-decoration: none;
 }
 
@@ -29,7 +29,7 @@
 .header-icon {
   margin-left: .4rem;
   display: inline-block;
-  float: right;
+  float: none;
   color: white;
 }
 
